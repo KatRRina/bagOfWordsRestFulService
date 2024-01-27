@@ -24,7 +24,7 @@ public class BagOfWordsAlgorithms {
         text = text.replaceAll("\\d+", "");
         for (String value :
                 STOP_WORDS) {
-            if (value == ".")
+            if (value.equals("."))
                 value = "\\.";
             text = text.replaceAll("\\b" + value + "\\b", "");
         }
@@ -42,7 +42,7 @@ public class BagOfWordsAlgorithms {
         StringBuilder lemmatizedText = new StringBuilder();
 
         for (final Info info : result) {
-            lemmatizedText.append(info.lex().get() + " ");
+            lemmatizedText.append(info.lex().get()).append(" ");
         }
         return lemmatizedText.toString().strip();
     }
