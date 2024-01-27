@@ -1,4 +1,4 @@
-package ru.butenko.DTO;
+package ru.butenko.dto;
 
 import lombok.*;
 

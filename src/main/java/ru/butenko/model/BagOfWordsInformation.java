@@ -3,7 +3,6 @@ package ru.butenko.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
