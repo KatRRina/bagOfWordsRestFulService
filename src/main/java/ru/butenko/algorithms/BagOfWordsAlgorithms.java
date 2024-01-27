@@ -12,7 +12,6 @@ import java.io.File;
 import java.util.*;
 
 public class BagOfWordsAlgorithms {
-    private final static int MAX_SIZE = 100;
     private final static List<String> list = List.of("у", "а", "и", "под", "над", "c", ".", ",", ";", ":", "!", "?");
     private final static List<String> STOP_WORDS = new ArrayList<>(list);
     private final static MyStem mystemAnalyzer =
@@ -20,8 +19,11 @@ public class BagOfWordsAlgorithms {
                     .newMyStem("3.0", Option.apply(new File("C:\\Users\\ebyte\\IdeaProjects\\bagOfWordsRestFulService\\mystem.exe"))).get();
 
     private static String deleteStopWorsd(String text) {
+        text = " " + text + " ";
         for (String value :
                 STOP_WORDS) {
+            if (value == ".")
+                value = "\\.";
             text = text.replaceAll("\\b" + value + "\\b", "");
         }
         return text;
@@ -38,9 +40,9 @@ public class BagOfWordsAlgorithms {
         StringBuilder lemmatizedText = new StringBuilder();
 
         for (final Info info : result) {
-            lemmatizedText.append(info.initial()).append(" -> ").append(info.lex()).append(" | ").append(info.rawResponse()).append("\n");
+            lemmatizedText.append(info.lex().get() + " ");
         }
-        return lemmatizedText.toString();
+        return lemmatizedText.toString().strip();
     }
 
     private static List<String> getListWithUniqueWordsInText(String text){
@@ -49,7 +51,8 @@ public class BagOfWordsAlgorithms {
         return new ArrayList<>(uniqueWordsInText);
     }
     public static Integer compareTexts(String textFirst, String textSecond) throws MyStemApplicationException{
-        Integer totalCountWords = 0;
+
+        int totalCountWords = 0;
         textFirst = deleteStopWorsd(textFirst);
         textFirst = getLemmatizationOfText(textFirst);
 
@@ -62,7 +65,7 @@ public class BagOfWordsAlgorithms {
         for (String word: listWithUniqueWordInSecondText)
             if(listWithUniqueWordInFirstText.contains(word))
                 totalCountWords += 1;
-        double result = totalCountWords.floatValue() / listWithUniqueWordInFirstText.size() * 100;
+        double result = (float) totalCountWords / listWithUniqueWordInFirstText.size() * 100;
 
         return (int)Math.round(result);
     }
