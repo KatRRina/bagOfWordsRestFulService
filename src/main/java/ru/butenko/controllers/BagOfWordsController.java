@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.butenko.dto.ComparisionTexts;
 import ru.butenko.dto.FailedResponseDto;
 import ru.butenko.dto.ResponseDataDto;
+import ru.butenko.exceptions.IncorrectMeaningException;
 import ru.butenko.exceptions.InvalidSizeException;
-import ru.butenko.exceptions.LemmatizationException;
 import ru.butenko.services.ProcessingService;
 
 @RestController
@@ -28,6 +28,10 @@ public class BagOfWordsController {
     @ExceptionHandler
     public ResponseEntity<FailedResponseDto> handleInvalidSizeException(InvalidSizeException ex){
         return new ResponseEntity<>(new FailedResponseDto(ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler
+    public ResponseEntity<IncorrectMeaningException> handleIncorrectMeaningException(InvalidSizeException ex){
+        return new ResponseEntity<>(new IncorrectMeaningException(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 //    @ExceptionHandler
 //    public ResponseEntity<FailedResponseDto> handleLemmatizationException(LemmatizationException ex){

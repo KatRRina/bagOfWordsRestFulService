@@ -20,6 +20,8 @@ public class BagOfWordsAlgorithms {
 
     private static String deleteStopWorsd(String text) {
         text = " " + text + " ";
+        text = text.replaceAll("\\p{Punct}+", "");
+        text = text.replaceAll("\\d+", "");
         for (String value :
                 STOP_WORDS) {
             if (value == ".")
