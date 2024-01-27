@@ -5,11 +5,14 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
+@Table(name="information")
 public class BagOfWordsInformation {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 

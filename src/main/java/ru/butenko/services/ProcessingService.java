@@ -8,6 +8,8 @@ import ru.butenko.algorithms.BagOfWordsAlgorithms;
 import ru.butenko.exceptions.IncorrectMeaningException;
 import ru.butenko.exceptions.InvalidSizeException;
 import ru.butenko.exceptions.LemmatizationException;
+import ru.butenko.model.BagOfWordsInformation;
+import ru.butenko.repositories.InformationRepository;
 import ru.stachek66.nlp.mystem.holding.MyStemApplicationException;
 
 import java.time.LocalDateTime;
@@ -16,6 +18,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class ProcessingService {
     private final static int MAX_SIZE = 100;
+    private final InformationRepository informationRepository;
     public ResponseDataDto processText(ComparisionTexts comparisionTexts){
         String textFirst = comparisionTexts.getTextFirst();
         String textSecond = comparisionTexts.getTextSecond();
@@ -31,6 +34,14 @@ public class ProcessingService {
         Integer result;
         try {
             result = BagOfWordsAlgorithms.compareTexts(textFirst, textSecond);
+            BagOfWordsInformation information = BagOfWordsInformation.builder()
+                    .user_login("lalalala")
+                    .text_first(textFirst)
+                    .text_second(textSecond)
+                    .outer_value(result)
+                    .create_(time)
+                    .build();
+            informationRepository.save(information);
 
         } catch (MyStemApplicationException e) {
             throw new LemmatizationException("Error when lemmatizing text using mystem");
