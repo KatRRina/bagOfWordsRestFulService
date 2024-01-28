@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.butenko.dto.ComparisionTexts;
+import ru.butenko.dto.ComparisionTextsDto;
 import ru.butenko.dto.FailedResponseDto;
 import ru.butenko.dto.ResponseDataDto;
 import ru.butenko.exceptions.IncorrectMeaningException;
@@ -22,8 +22,8 @@ public class BagOfWordsController {
     @SneakyThrows
     @PostMapping("/bagOfWords")
     public ResponseDataDto handleBagOfWords(
-            @RequestBody ComparisionTexts comparisionTexts) {
-        return processingService.processText(comparisionTexts);
+            @RequestBody ComparisionTextsDto comparisionTextsDto) {
+        return processingService.processText(comparisionTextsDto);
     }
     @ExceptionHandler
     public ResponseEntity<FailedResponseDto> handleInvalidSizeException(InvalidSizeException ex){
