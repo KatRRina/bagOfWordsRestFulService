@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import ru.butenko.dto.ComparisionTextsDto;
+import ru.butenko.dto.ComparisonTextsDto;
 import ru.butenko.dto.ResponseDataDto;
 import ru.butenko.algorithms.BagOfWordsAlgorithms;
 import ru.butenko.exceptions.IncorrectMeaningException;
@@ -17,7 +17,6 @@ import ru.butenko.repositories.StopWordRepository;
 import ru.stachek66.nlp.mystem.holding.MyStemApplicationException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,9 +29,9 @@ public class ProcessingService {
     private final InformationRepository informationRepository;
     private final StopWordRepository stopWordRepository;
 
-    public ResponseDataDto processText(ComparisionTextsDto comparisionTextsDto, Authentication auth) {
-        String textFirst = comparisionTextsDto.getTextFirst().strip();
-        String textSecond = comparisionTextsDto.getTextSecond().strip();
+    public ResponseDataDto processText(ComparisonTextsDto comparisonTextsDto, Authentication auth) {
+        String textFirst = comparisonTextsDto.getTextFirst().strip();
+        String textSecond = comparisonTextsDto.getTextSecond().strip();
         if (textFirst.length() > MAX_SIZE || textFirst.isEmpty())
             throw new InvalidSizeException("The first text exceeds the allowed length value");
         if (textSecond.length() > MAX_SIZE || textSecond.isEmpty())

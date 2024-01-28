@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 @Builder
-public class ComparisionTextsDto {
+public class ComparisonTextsDto {
     private String textFirst;
     private String textSecond;
 }

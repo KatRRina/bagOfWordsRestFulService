@@ -5,7 +5,6 @@ import ru.butenko.algorithms.BagOfWordsAlgorithms;
 import ru.stachek66.nlp.mystem.holding.MyStemApplicationException;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
