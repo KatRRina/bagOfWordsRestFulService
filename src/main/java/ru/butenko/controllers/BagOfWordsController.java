@@ -31,8 +31,8 @@ public class BagOfWordsController {
         return new ResponseEntity<>(new FailedResponseDto(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
-    public ResponseEntity<IncorrectMeaningException> handleIncorrectMeaningException(InvalidSizeException ex){
-        return new ResponseEntity<>(new IncorrectMeaningException(ex.getMessage()), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<FailedResponseDto> handleIncorrectMeaningException(IncorrectMeaningException ex){
+        return new ResponseEntity<>(new FailedResponseDto(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 //    @ExceptionHandler
 //    public ResponseEntity<FailedResponseDto> handleLemmatizationException(LemmatizationException ex){

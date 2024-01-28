@@ -31,14 +31,14 @@ public class ProcessingService {
     private final StopWordRepository stopWordRepository;
 
     public ResponseDataDto processText(ComparisionTextsDto comparisionTextsDto, Authentication auth) {
-        String textFirst = comparisionTextsDto.getTextFirst();
-        String textSecond = comparisionTextsDto.getTextSecond();
-        if (textFirst.length() > MAX_SIZE)
+        String textFirst = comparisionTextsDto.getTextFirst().strip();
+        String textSecond = comparisionTextsDto.getTextSecond().strip();
+        if (textFirst.length() > MAX_SIZE || textFirst.isEmpty())
             throw new InvalidSizeException("The first text exceeds the allowed length value");
-        if (textSecond.length() > MAX_SIZE)
+        if (textSecond.length() > MAX_SIZE || textSecond.isEmpty())
             throw new InvalidSizeException("The second text exceeds the allowed length value");
         if (!textFirst.matches("^[а-яА-Я\\p{Punct}\\d\\s]+") || !textSecond.matches("^[а-яА-Я\\p{Punct}\\d\\s]+")) {
-            throw new IncorrectMeaningException("he wrong meaning, the text must consist of Russian letters, punctuation marks and numbers.");
+            throw new IncorrectMeaningException("The wrong meaning, the text must consist of Russian letters, punctuation marks and numbers.");
         }
 
         LocalDateTime time = LocalDateTime.now();
