@@ -1,9 +1,9 @@
 package ru.butenko.controllers;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,11 +19,12 @@ import ru.butenko.services.ProcessingService;
 @RequiredArgsConstructor
 public class BagOfWordsController {
     private final ProcessingService processingService;
-    @SneakyThrows
+
     @PostMapping("/bagOfWords")
     public ResponseDataDto handleBagOfWords(
-            @RequestBody ComparisionTextsDto comparisionTextsDto) {
-        return processingService.processText(comparisionTextsDto);
+            @RequestBody ComparisionTextsDto comparisionTextsDto,
+            Authentication auth) {
+        return processingService.processText(comparisionTextsDto, auth);
     }
     @ExceptionHandler
     public ResponseEntity<FailedResponseDto> handleInvalidSizeException(InvalidSizeException ex){

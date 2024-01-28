@@ -1,8 +1,8 @@
 package ru.butenko.services;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.butenko.dto.ComparisionTextsDto;
 import ru.butenko.dto.ResponseDataDto;
@@ -25,7 +25,7 @@ public class ProcessingService {
 
     private final InformationRepository informationRepository;
 
-    public ResponseDataDto processText(ComparisionTextsDto comparisionTextsDto) {
+    public ResponseDataDto processText(ComparisionTextsDto comparisionTextsDto, Authentication auth) {
         String textFirst = comparisionTextsDto.getTextFirst();
         String textSecond = comparisionTextsDto.getTextSecond();
         if (textFirst.length() > MAX_SIZE)
@@ -41,7 +41,7 @@ public class ProcessingService {
         try {
             result = BagOfWordsAlgorithms.compareTexts(textFirst, textSecond);
             BagOfWordsInformation information = BagOfWordsInformation.builder()
-                    .user_login("lalalala")
+                    .user_login(auth.getName())
                     .text_first(textFirst)
                     .text_second(textSecond)
                     .outer_value(result)
