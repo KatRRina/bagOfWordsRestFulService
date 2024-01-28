@@ -11,10 +11,14 @@ import ru.butenko.exceptions.IncorrectMeaningException;
 import ru.butenko.exceptions.InvalidSizeException;
 import ru.butenko.exceptions.LemmatizationException;
 import ru.butenko.model.BagOfWordsInformation;
+import ru.butenko.model.StopWord;
 import ru.butenko.repositories.InformationRepository;
+import ru.butenko.repositories.StopWordRepository;
 import ru.stachek66.nlp.mystem.holding.MyStemApplicationException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,7 @@ public class ProcessingService {
     private final int MAX_SIZE = 100;
 
     private final InformationRepository informationRepository;
+    private final StopWordRepository stopWordRepository;
 
     public ResponseDataDto processText(ComparisionTextsDto comparisionTextsDto, Authentication auth) {
         String textFirst = comparisionTextsDto.getTextFirst();
@@ -38,8 +43,9 @@ public class ProcessingService {
 
         LocalDateTime time = LocalDateTime.now();
         Integer result;
+        List<String> stopWords = stopWordRepository.findAll().stream().map(StopWord::getWord_value).toList();
         try {
-            result = BagOfWordsAlgorithms.compareTexts(textFirst, textSecond);
+            result = BagOfWordsAlgorithms.compareTexts(textFirst, textSecond, stopWords);
             BagOfWordsInformation information = BagOfWordsInformation.builder()
                     .user_login(auth.getName())
                     .text_first(textFirst)

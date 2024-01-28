@@ -28,7 +28,6 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        //.anyRequest()
                         .requestMatchers(new AntPathRequestMatcher("/bagOfWords"))
                         .hasAuthority(Roles.USER.name())
                 )
